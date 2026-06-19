@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Black Mesa — Sistema de Classificação de Risco</title>
+    <title>SUS + Organizado — Classificação de Risco</title>
     <style>
         /* ======================================================================= */
         /*  RESET E CONFIGURAÇÕES GLOBAIS                                           */
@@ -114,9 +114,9 @@
         }
 
         /* ======================================================================= */
-        /*  HUD HEV (fixed)                                                         */
+        /*  HUD (sem referência a Black Mesa)                                       */
         /* ======================================================================= */
-        .hev-hud {
+        .system-hud {
             position: fixed;
             bottom: 20px;
             left: 20px;
@@ -138,21 +138,21 @@
             min-width: 140px;
             transition: opacity 0.3s;
         }
-        .hev-hud .line {
+        .system-hud .line {
             display: flex;
             justify-content: space-between;
             gap: 16px;
         }
-        .hev-hud .value {
+        .system-hud .value {
             color: #fff;
         }
-        .hev-hud .label {
+        .system-hud .label {
             color: var(--metal);
         }
-        .hev-hud .value.warning {
+        .system-hud .value.warning {
             color: var(--amarelo);
         }
-        .hev-hud .value.danger {
+        .system-hud .value.danger {
             color: var(--vermelho);
         }
 
@@ -165,7 +165,7 @@
         }
 
         /* ======================================================================= */
-        /*  HEADER — ESTILO BLACK MESA                                              */
+        /*  HEADER — ESTILO INDUSTRIAL                                              */
         /* ======================================================================= */
         .header {
             background: rgba(10, 10, 10, 0.95);
@@ -525,7 +525,7 @@
         }
 
         /* ======================================================================= */
-        /*  TYPOGRAPHY — ESTILO BLACK MESA                                         */
+        /*  TYPOGRAPHY — ESTILO INDUSTRIAL                                         */
         /* ======================================================================= */
         .page-title {
             font-size: 2.5rem;
@@ -2108,21 +2108,21 @@
     <!-- ===== PARTICLES ===== -->
     <div class="particle-container" id="particles"></div>
 
-    <!-- ===== HUD HEV ===== -->
-    <div class="hev-hud">
-        <div class="line"><span class="label">HEV Suit</span><span class="value">ONLINE</span></div>
-        <div class="line"><span class="label">Shield</span><span class="value" id="shield-value">100%</span></div>
-        <div class="line"><span class="label">Health</span><span class="value" id="health-value">100%</span></div>
-        <div class="line"><span class="label">Location</span><span class="value">TRIAGEM</span></div>
-        <div class="line"><span class="label">Time</span><span class="value" id="hud-time">--:--</span></div>
+    <!-- ===== HUD — SISTEMA DE MONITORAMENTO ===== -->
+    <div class="system-hud">
+        <div class="line"><span class="label">Sistema</span><span class="value">ONLINE</span></div>
+        <div class="line"><span class="label">Fila</span><span class="value" id="hud-fila">0</span></div>
+        <div class="line"><span class="label">Status</span><span class="value" id="hud-status">NORMAL</span></div>
+        <div class="line"><span class="label">Local</span><span class="value">TRIAGEM</span></div>
+        <div class="line"><span class="label">Hora</span><span class="value" id="hud-time">--:--</span></div>
     </div>
 
     <!-- ===== HEADER ===== -->
     <header class="header" id="header">
         <div class="header-inner">
             <div class="logo">
-                <span class="logo-icon">λ</span>
-                Black<span>Mesa</span>
+                <span class="logo-icon">🏥</span>
+                SUS<span>+</span>Organizado
             </div>
 
             <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
@@ -2529,7 +2529,7 @@
                     <div class="role">Desenvolvedor Front-End</div>
                     <div class="divider"></div>
                     <div class="description">
-                        Responsável pela criação do site, design neon/cyberpunk e implementação completa do sistema.
+                        Responsável pela criação do site, design industrial e implementação completa do sistema.
                     </div>
                     <span class="badge-credit">🚀 Desenvolvimento</span>
                 </div>
@@ -2557,7 +2557,7 @@
         <!-- ===================== PAGE 7 — JOGO ===================== -->
         <section class="page" id="page7">
             <h1 class="page-title">🎮 Jogo — Classificação de Risco</h1>
-            <p class="page-subtitle">Treine suas habilidades como técnico de triagem da Black Mesa</p>
+            <p class="page-subtitle">Treine suas habilidades como técnico de triagem do SUS</p>
 
             <div class="game-container" id="gameContainer">
                 <!-- OVERLAY (fim de jogo) -->
@@ -2671,18 +2671,18 @@
             // 2. HUD
             // ============================================================
             function updateHUD() {
-                var health = document.getElementById('health-value');
-                var shield = document.getElementById('shield-value');
+                var filaEl = document.getElementById('hud-fila');
+                var statusEl = document.getElementById('hud-status');
                 var timeEl = document.getElementById('hud-time');
-                if (health) {
-                    var val = 75 + Math.floor(Math.random() * 25);
-                    health.textContent = val + '%';
-                    health.className = 'value' + (val < 50 ? ' danger' : val < 80 ? ' warning' : '');
+                if (filaEl) {
+                    var fila = Math.floor(Math.random() * 30) + 5;
+                    filaEl.textContent = fila;
                 }
-                if (shield) {
-                    var val = 85 + Math.floor(Math.random() * 15);
-                    shield.textContent = val + '%';
-                    shield.className = 'value' + (val < 60 ? ' danger' : val < 85 ? ' warning' : '');
+                if (statusEl) {
+                    var statuses = ['NORMAL', 'ATENÇÃO', 'ALERTA'];
+                    var idx = Math.floor(Math.random() * 3);
+                    statusEl.textContent = statuses[idx];
+                    statusEl.className = 'value' + (idx === 2 ? ' danger' : idx === 1 ? ' warning' : '');
                 }
                 if (timeEl) {
                     var now = new Date();
@@ -2701,7 +2701,6 @@
             var navMenu = document.getElementById('navMenu');
             var header = document.getElementById('header');
 
-            // Scroll effect
             window.addEventListener('scroll', function() {
                 if (window.scrollY > 50) {
                     header.classList.add('scrolled');
@@ -2726,9 +2725,7 @@
                 if (target) {
                     setTimeout(function() {
                         target.classList.add('active');
-                        // Re-anima cards
                         animateCards(target);
-                        // Se for a página do jogo, inicia o jogo
                         if (pageId === 'page7') {
                             initGame();
                         }
@@ -2781,7 +2778,6 @@
                 });
             }
 
-            // Inicializa página 1 ativa
             var page1 = document.getElementById('page1');
             if (page1) {
                 page1.classList.add('active');
@@ -2801,13 +2797,13 @@
                 isRunning: false,
                 timerInterval: null,
                 currentPatient: null,
-                highScore: parseInt(localStorage.getItem('blackMesaHighScore')) || 0,
+                highScore: parseInt(localStorage.getItem('susHighScore')) || 0,
                 patients: [
                     // PRETO (crítico)
                     { name: 'João Silva', age: 68, symptoms: 'Dor forte no peito, falta de ar, sudorese fria.',
-                    risk: 'black' },
+                        risk: 'black' },
                     { name: 'Maria Santos', age: 72, symptoms: 'Desmaio súbito, pulso fraco, inconsciência.',
-                    risk: 'black' },
+                        risk: 'black' },
                     { name: 'Carlos Lima', age: 55, symptoms: 'Hemorragia intensa após acidente, pressão caindo.',
                         risk: 'black' },
                     { name: 'Ana Paula', age: 45, symptoms: 'Trauma craniano com perda de consciência.', risk: 'black' },
@@ -2815,13 +2811,13 @@
                     // VERMELHO (grave)
                     { name: 'Lucia Alves', age: 62, symptoms: 'Falta de ar progressiva, chiado no peito.', risk: 'red' },
                     { name: 'Pedro Rocha', age: 50, symptoms: 'Suspeita de infarto, dor no braço esquerdo.',
-                    risk: 'red' },
+                        risk: 'red' },
                     { name: 'Fernanda Costa', age: 38, symptoms: 'Sangramento vaginal intenso.', risk: 'red' },
                     { name: 'Ricardo Dias', age: 60, symptoms: 'Fratura exposta na perna, dor intensa.', risk: 'red' },
                     { name: 'Camila Souza', age: 42, symptoms: 'Crise de asma grave, saturação baixa.', risk: 'red' },
                     // AMARELO (atenção)
                     { name: 'Roberto Nunes', age: 35, symptoms: 'Febre alta (39,5°C) há 3 dias, tosse seca.',
-                    risk: 'yellow' },
+                        risk: 'yellow' },
                     { name: 'Tatiana Oliveira', age: 28, symptoms: 'Dor abdominal moderada, náuseas.', risk: 'yellow' },
                     { name: 'Felipe Martins', age: 40, symptoms: 'Pressão arterial elevada (160/100).', risk: 'yellow' },
                     { name: 'Juliana Lima', age: 33, symptoms: 'Infecção urinária com dor ao urinar.', risk: 'yellow' },
@@ -2833,7 +2829,7 @@
                         risk: 'green' },
                     { name: 'Diego Pereira', age: 27, symptoms: 'Alergia sazonal, espirros e coceira.', risk: 'green' },
                     { name: 'Vanessa Silva', age: 24, symptoms: 'Dor de cabeça leve, sem outros sintomas.',
-                    risk: 'green' },
+                        risk: 'green' },
                 ]
             };
 
@@ -2875,13 +2871,11 @@
                 gameElements.correctCount.textContent = gameData.correct;
                 gameElements.wrongCount.textContent = gameData.wrong;
 
-                // Timer color
                 var timerEl = gameElements.timerDisplay;
                 timerEl.className = 'value timer';
                 if (gameData.timer <= 5) timerEl.classList.add('danger');
                 else if (gameData.timer <= 10) timerEl.classList.add('warning');
 
-                // High score
                 if (gameData.highScore > 0) {
                     gameElements.highScoreDisplay.textContent = gameData.highScore;
                 }
@@ -2902,25 +2896,21 @@
                     clearInterval(gameData.timerInterval);
                     gameData.timerInterval = null;
                 }
-                // Atualiza high score
                 if (gameData.score > gameData.highScore) {
                     gameData.highScore = gameData.score;
-                    localStorage.setItem('blackMesaHighScore', String(gameData.highScore));
+                    localStorage.setItem('susHighScore', String(gameData.highScore));
                 }
                 gameElements.finalScore.textContent = gameData.score;
                 gameElements.highScoreDisplay.textContent = gameData.highScore;
                 gameElements.gameOverlay.classList.add('show');
-                // Desabilita botões
                 riskButtons.forEach(function(btn) { btn.disabled = true; });
             }
 
             function resetGame() {
-                // Para o timer
                 if (gameData.timerInterval) {
                     clearInterval(gameData.timerInterval);
                     gameData.timerInterval = null;
                 }
-                // Reseta dados
                 gameData.score = 0;
                 gameData.streak = 0;
                 gameData.correct = 0;
@@ -2928,16 +2918,11 @@
                 gameData.timer = gameData.maxTimer;
                 gameData.isRunning = false;
                 gameData.currentPatient = null;
-                // Esconde overlay
                 gameElements.gameOverlay.classList.remove('show');
-                // Habilita botões
                 riskButtons.forEach(function(btn) { btn.disabled = false; });
-                // Atualiza UI
                 updateUI();
-                // Mostra primeiro paciente
                 var first = getRandomPatient();
                 displayPatient(first);
-                // Inicia timer
                 startTimer();
             }
 
@@ -2973,24 +2958,19 @@
                 }
                 updateUI();
 
-                // Novo paciente
                 var next = getRandomPatient();
                 displayPatient(next);
             }
 
             function initGame() {
-                // Se já estiver rodando, não reinicia automaticamente
                 if (gameData.isRunning) return;
-                // Se houver overlay, reseta
                 if (gameElements.gameOverlay.classList.contains('show')) {
                     resetGame();
                 } else {
-                    // Inicia do zero
                     resetGame();
                 }
             }
 
-            // Eventos dos botões de risco
             riskButtons.forEach(function(btn) {
                 btn.addEventListener('click', function() {
                     if (this.disabled) return;
@@ -2999,19 +2979,15 @@
                 });
             });
 
-            // Reiniciar
             gameElements.btnRestart.addEventListener('click', function() {
                 resetGame();
             });
 
-            // Inicializa o jogo quando a página é carregada (se estiver ativa)
-            // Mas só inicia quando a página for exibida
             var page7 = document.getElementById('page7');
             if (page7 && page7.classList.contains('active')) {
                 setTimeout(initGame, 500);
             }
 
-            // Observador para quando a página 7 se tornar ativa
             var observer = new MutationObserver(function(mutations) {
                 mutations.forEach(function(mutation) {
                     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
@@ -3027,15 +3003,12 @@
             }
 
             // ============================================================
-            // 5. TELEMETRIA - CONSOLE EASTER EGG
+            // 5. CONSOLE EASTER EGG
             // ============================================================
-            console.log('%cλ Black Mesa Research Facility — Sistema de Triagem', 'color: #ff7a00; font-size:18px; font-weight:bold;');
-            console.log('%c"Prepare-se para consequências imprevistas." — G-Man', 'color: #88ff88;');
-            console.log('%c🏥 Jogo de Classificação de Risco carregado!', 'color: #ff7a00;');
+            console.log('%c🏥 SUS + Organizado — Sistema de Classificação de Risco', 'color: #ff7a00; font-size:18px; font-weight:bold;');
+            console.log('%c"Organizar para salvar vidas."', 'color: #88ff88;');
+            console.log('%c🎮 Jogo de Classificação carregado!', 'color: #ff7a00;');
 
-            // ============================================================
-            // 6. FIM
-            // ============================================================
         })();
     </script>
 
