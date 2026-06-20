@@ -3,93 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolução das Indústrias Brasileiras</title>
-    <!-- Font Awesome -->
+    <title>Evolução Industrial do Brasil</title>
+    <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ===== CORES DA BANDEIRA ===== */
-        :root {
-            --verde: #009739;
-            --amarelo: #F5C842;
-            --azul-escuro: #0a1628;
-            --azul-bandeira: #012169;
-            --branco: #f0f4fa;
-            --cinza-claro: #b0c7db;
-        }
-
+        /* ---------- RESET & BASE ---------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--azul-escuro);
-            color: var(--branco);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #0f141a;
+            color: #dce4ed;
+            line-height: 1.7;
         }
 
-        /* --- Fundo com ondas sutis nas cores da bandeira --- */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background:
-                radial-gradient(circle at 20% 30%, rgba(0, 151, 57, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(245, 200, 66, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(1, 33, 105, 0.1) 0%, transparent 70%);
-            z-index: 0;
-            animation: flutuar 35s infinite alternate ease-in-out;
+        /* ---------- TEMA INDUSTRIAL (CINZA, AZUL, METÁLICO) ---------- */
+        :root {
+            --bg-primary: #0f141a;
+            --bg-card: rgba(28, 38, 50, 0.75);
+            --bg-card-hover: rgba(40, 55, 72, 0.85);
+            --border-glow: rgba(70, 130, 200, 0.2);
+            --text-primary: #e8eef5;
+            --text-secondary: #b0c4d9;
+            --accent-blue: #3a7ec8;
+            --accent-steel: #8aaac0;
+            --shadow-heavy: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
+            --radius-card: 18px;
+            --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        @keyframes flutuar {
-            0% {
-                transform: translate(0, 0) scale(1) rotate(0deg);
-            }
-            100% {
-                transform: translate(3%, -3%) scale(1.05) rotate(3deg);
-            }
-        }
-
-        /* ===== NAVEGAÇÃO SUPERIOR ===== */
+        /* ---------- NAVEGAÇÃO FIXA ---------- */
         nav {
-            position: relative;
-            z-index: 10;
-            background: rgba(1, 33, 105, 0.8);
-            backdrop-filter: blur(14px);
-            padding: 0.7rem 2rem;
-            border-bottom: 2px solid var(--amarelo);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(12, 18, 26, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(70, 130, 200, 0.2);
+            z-index: 1000;
+            padding: 0.8rem 2rem;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.5rem 1rem;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
-        .nav-brand {
+        .nav-logo {
             font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: -0.5px;
-            color: var(--amarelo);
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            color: var(--accent-steel);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .nav-brand i {
-            color: var(--branco);
-            background: var(--verde);
-            padding: 6px;
-            border-radius: 8px;
-            font-size: 1rem;
+        .nav-logo i {
+            color: var(--accent-blue);
+            font-size: 1.6rem;
         }
 
         .nav-links {
@@ -98,451 +80,720 @@
             flex-wrap: wrap;
         }
 
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: #8aa4c0;
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
             font-size: 0.8rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: 0.25s ease;
+            padding: 0.4rem 0.9rem;
+            border-radius: 30px;
+            transition: var(--transition-smooth);
             letter-spacing: 0.3px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
         }
 
-        .nav-btn:hover {
-            color: var(--branco);
-            background: rgba(255, 255, 255, 0.08);
+        .nav-link:hover {
+            background: rgba(58, 126, 200, 0.15);
+            color: #fff;
         }
 
-        .nav-btn.active {
-            color: var(--azul-escuro);
-            background: var(--amarelo);
-            box-shadow: 0 4px 12px rgba(245, 200, 66, 0.3);
-            font-weight: 700;
+        .nav-link.active {
+            background: var(--accent-blue);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(58, 126, 200, 0.35);
         }
 
-        /* ===== CONTAINER PRINCIPAL ===== */
-        .main-container {
-            position: relative;
-            z-index: 5;
-            flex: 1;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem 2rem 0.5rem 2rem;
-        }
-
-        .pages-wrapper {
-            flex: 1;
-            position: relative;
-        }
-
-        .page {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            padding: 0.2rem 0.2rem 0.5rem 0.2rem;
-            opacity: 0;
-            transform: translateY(20px) scale(0.97);
-            pointer-events: none;
-            transition: 0.45s cubic-bezier(0.23, 1, 0.32, 1);
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--amarelo) transparent;
-        }
-
-        .page::-webkit-scrollbar {
-            width: 5px;
-        }
-        .page::-webkit-scrollbar-thumb {
-            background: var(--amarelo);
-            border-radius: 10px;
-        }
-        .page::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .page.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            pointer-events: auto;
-        }
-
-        /* ===== CARDS DE CONTEÚDO ===== */
-        .content-card {
-            max-width: 920px;
+        /* ---------- CONTEÚDO PRINCIPAL ---------- */
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 28px;
-            padding: 2.8rem 3.2rem;
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7);
-            transition: 0.3s;
+            padding: 6rem 2rem 2rem 2rem;
         }
 
-        .content-card h1 {
-            font-size: 2.3rem;
+        /* ---------- SEÇÕES ---------- */
+        .section {
+            padding: 3rem 0 4rem 0;
+            border-bottom: 1px solid rgba(70, 130, 200, 0.08);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header .icon-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(58, 126, 200, 0.15);
+            border: 1px solid rgba(58, 126, 200, 0.3);
+            border-radius: 60px;
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
+            color: var(--accent-blue);
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 2.6rem;
             font-weight: 700;
-            margin-bottom: 0.2rem;
-            color: var(--amarelo);
             letter-spacing: -0.5px;
-            text-shadow: 0 2px 10px rgba(245, 200, 66, 0.15);
+            background: linear-gradient(135deg, #dce4ed, #8aaac0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .content-card .subtitle {
-            color: var(--cinza-claro);
-            font-size: 0.95rem;
-            border-left: 4px solid var(--verde);
-            padding-left: 1.2rem;
-            margin-bottom: 1.8rem;
-            margin-top: 0.2rem;
-            font-weight: 400;
-        }
-
-        .content-card p {
-            line-height: 1.9;
-            color: #d6e3f0;
-            margin-bottom: 1.3rem;
+        .section-sub {
             font-size: 1rem;
+            color: var(--text-secondary);
+            margin: -0.5rem 0 1.5rem 0;
+            padding-left: 4.5rem;
+            border-left: 3px solid var(--accent-blue);
+            padding-left: 1.2rem;
         }
 
-        .content-card ul {
+        .section-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            align-items: flex-start;
+        }
+
+        .section-text {
+            flex: 2;
+            min-width: 280px;
+        }
+
+        .section-text p {
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
+            color: #c8d6e5;
+        }
+
+        .section-text ul {
             list-style: none;
             padding: 0;
         }
 
-        .content-card ul li {
-            padding: 0.8rem 0 0.8rem 2rem;
+        .section-text ul li {
+            padding: 0.6rem 0 0.6rem 2rem;
             position: relative;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: #dfeaf5;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             font-weight: 400;
+            color: #d0dceb;
         }
 
-        .content-card ul li:last-child {
+        .section-text ul li:last-child {
             border-bottom: none;
         }
 
-        .content-card ul li i {
+        .section-text ul li i {
             position: absolute;
             left: 0;
-            top: 0.9rem;
-            color: var(--amarelo);
+            top: 0.7rem;
+            color: var(--accent-blue);
+            width: 1.4rem;
+            text-align: center;
             font-size: 1rem;
-            width: 1.2rem;
+        }
+
+        .section-image {
+            flex: 1.2;
+            min-width: 220px;
+            background: rgba(28, 38, 50, 0.6);
+            border-radius: var(--radius-card);
+            padding: 1.5rem;
+            border: 1px solid rgba(70, 130, 200, 0.15);
+            box-shadow: var(--shadow-heavy);
+            text-align: center;
+            transition: var(--transition-smooth);
+        }
+
+        .section-image:hover {
+            transform: translateY(-6px);
+            border-color: rgba(58, 126, 200, 0.4);
+            background: rgba(35, 50, 68, 0.7);
+        }
+
+        .section-image i {
+            font-size: 4.5rem;
+            color: var(--accent-steel);
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-image .placeholder-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 1.2rem;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ---------- DESTAQUE PARA FUTURO (ALERTA) ---------- */
+        .alert-future {
+            background: rgba(200, 160, 50, 0.08);
+            border-left: 4px solid #d4a830;
+            padding: 1.2rem 1.8rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            color: #e8dba0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .alert-future i {
+            font-size: 1.8rem;
+            color: #d4a830;
+        }
+
+        /* ---------- LINHA DO TEMPO VISUAL ---------- */
+        .timeline-wrapper {
+            margin: 3rem 0 1rem 0;
+            overflow-x: auto;
+            padding: 0.5rem 0 1.5rem 0;
+        }
+
+        .timeline {
+            display: flex;
+            gap: 0.5rem;
+            min-width: 700px;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-steel));
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            flex: 1;
             text-align: center;
         }
 
-        /* selos de época */
-        .timeline-badge {
-            display: inline-block;
-            background: rgba(0, 151, 57, 0.15);
-            color: var(--amarelo);
-            padding: 0.2rem 1.4rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
+        .timeline-dot {
+            width: 14px;
+            height: 14px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            border: 2px solid #0f141a;
+            box-shadow: 0 0 0 3px rgba(58, 126, 200, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-label {
+            font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.8px;
-            border: 1px solid rgba(245, 200, 66, 0.25);
-            margin-bottom: 1.2rem;
-            text-transform: uppercase;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            background: rgba(20, 30, 42, 0.8);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .timeline-badge i {
-            margin-right: 6px;
-            color: var(--verde);
-        }
-
-        /* ===== PÁGINA DE CRÉDITOS ===== */
-        .credits-grid {
+        /* ---------- CARDS ANIMADOS (para cada fase) ---------- */
+        .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
         }
 
-        .credit-item {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 20px;
-            padding: 1.8rem 1rem;
+        .phase-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(6px);
+            border-radius: var(--radius-card);
+            padding: 1.5rem 1.2rem;
+            border: 1px solid rgba(70, 130, 200, 0.1);
+            transition: var(--transition-smooth);
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: 0.3s ease;
-            backdrop-filter: blur(4px);
+            box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.5);
         }
 
-        .credit-item:hover {
-            transform: translateY(-8px);
-            border-color: var(--amarelo);
-            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6);
-            background: rgba(245, 200, 66, 0.05);
+        .phase-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: var(--bg-card-hover);
+            border-color: var(--accent-blue);
+            box-shadow: 0 16px 40px -10px rgba(58, 126, 200, 0.25);
         }
 
-        .credit-item i {
-            font-size: 2.8rem;
-            color: var(--amarelo);
-            margin-bottom: 0.6rem;
-            display: block;
+        .phase-card i {
+            font-size: 2.2rem;
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
         }
 
-        .credit-item h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--branco);
+        .phase-card h4 {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 0.2rem;
         }
 
-        .credit-item p {
-            font-size: 0.8rem;
-            color: #8aa4c0;
+        .phase-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
             margin: 0;
         }
 
-        /* ===== RODAPÉ COM NAVEGAÇÃO ===== */
-        .footer-nav {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.6rem 0.5rem 0.2rem 0.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            margin-top: 0.3rem;
-        }
-
-        .step-indicators {
-            display: flex;
-            gap: 0.6rem;
-            align-items: center;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #2a4058;
-            transition: 0.3s ease;
+        /* ---------- BOTÃO VOLTAR AO TOPO ---------- */
+        .btn-topo {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-blue);
+            color: #fff;
+            border: none;
+            width: 52px;
+            height: 52px;
+            border-radius: 60px;
+            font-size: 1.6rem;
             cursor: pointer;
-            border: 1px solid transparent;
+            box-shadow: 0 8px 24px rgba(58, 126, 200, 0.35);
+            transition: var(--transition-smooth);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            z-index: 999;
         }
 
-        .dot.active {
-            background: var(--amarelo);
-            width: 28px;
-            border-radius: 6px;
-            border-color: var(--amarelo);
-            box-shadow: 0 0 16px rgba(245, 200, 66, 0.25);
+        .btn-topo.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
-        .nav-arrows {
-            display: flex;
-            gap: 0.8rem;
+        .btn-topo:hover {
+            background: #2a6bb0;
+            transform: scale(1.08);
+            box-shadow: 0 12px 32px rgba(58, 126, 200, 0.5);
         }
 
-        .nav-arrows button {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--cinza-claro);
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.25s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-arrows button:hover {
-            background: var(--amarelo);
-            border-color: var(--amarelo);
-            color: var(--azul-escuro);
-            box-shadow: 0 4px 16px rgba(245, 200, 66, 0.25);
-        }
-
-        .page-counter {
-            font-size: 0.85rem;
-            color: #8aa4c0;
-            font-weight: 600;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.2rem 1rem;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* ===== RESPONSIVIDADE ===== */
-        @media (max-width: 750px) {
-            nav {
-                padding: 0.5rem 1rem;
+        /* ---------- RESPONSIVO ---------- */
+        @media (max-width: 900px) {
+            .container {
+                padding: 5rem 1.5rem 1.5rem 1.5rem;
             }
-            .nav-brand {
-                font-size: 0.95rem;
+            .section-title {
+                font-size: 2rem;
             }
-            .nav-btn {
-                padding: 0.3rem 0.7rem;
-                font-size: 0.7rem;
+            .section-content {
+                flex-direction: column;
             }
-            .main-container {
-                padding: 0.8rem 0.8rem 0.2rem 0.8rem;
+            .section-image {
+                width: 100%;
             }
-            .content-card {
-                padding: 1.8rem 1.2rem;
-                border-radius: 20px;
-            }
-            .content-card h1 {
-                font-size: 1.7rem;
-            }
-            .credits-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.8rem;
-            }
-            .credit-item {
-                padding: 1rem 0.3rem;
-            }
-            .footer-nav {
-                flex-wrap: wrap;
-                gap: 0.4rem;
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
             .nav-links {
                 gap: 0.1rem;
             }
-            .nav-btn {
-                font-size: 0.6rem;
-                padding: 0.2rem 0.5rem;
+            .nav-link {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.7rem;
             }
-            .content-card {
-                padding: 1.2rem 0.8rem;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 0.5rem 1rem;
             }
-            .credits-grid {
+            .nav-logo {
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .section-header .icon-circle {
+                width: 48px;
+                height: 48px;
+                font-size: 1.6rem;
+            }
+            .timeline {
+                min-width: 500px;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .cards-grid {
                 grid-template-columns: 1fr;
             }
-            .content-card ul li {
+            .section-text ul li {
                 padding-left: 1.6rem;
-                font-size: 0.9rem;
+                font-size: 0.95rem;
             }
+        }
+
+        /* ---------- SCROLLBAR ---------- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f141a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-steel);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue);
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVEGAÇÃO SUPERIOR -->
+    <!-- ========== NAVEGAÇÃO FIXA ========== -->
     <nav>
-        <div class="nav-brand">
-            <i class="fas fa-industry"></i> Indústria Brasil
+        <div class="nav-logo">
+            <i class="fas fa-industry"></i>
+            <span>Indústria Brasil</span>
         </div>
         <div class="nav-links" id="navLinks">
-            <button class="nav-btn active" data-page="1">Créditos</button>
-            <button class="nav-btn" data-page="2">1808-1930</button>
-            <button class="nav-btn" data-page="3">1930-1980</button>
-            <button class="nav-btn" data-page="4">1980-2000</button>
-            <button class="nav-btn" data-page="5">Séc. XXI</button>
-            <button class="nav-btn" data-page="6">Futuro</button>
+            <a href="#secao1" class="nav-link active">1500–1808</a>
+            <a href="#secao2" class="nav-link">1808–1930</a>
+            <a href="#secao3" class="nav-link">1930–1955</a>
+            <a href="#secao4" class="nav-link">1956–1980</a>
+            <a href="#secao5" class="nav-link">1980–hoje</a>
+            <a href="#secao6" class="nav-link">Futuro</a>
         </div>
     </nav>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <div class="main-container">
-        <div class="pages-wrapper">
+    <!-- ========== CONTEÚDO ========== -->
+    <div class="container">
 
-            <!-- PÁGINA 1: CRÉDITOS -->
-            <div class="page active" id="page-1">
-                <div class="content-card" style="text-align: center;">
-                    <i class="fas fa-flag" style="font-size: 3.2rem; color: var(--verde); background: var(--amarelo); padding: 12px; border-radius: 60px; margin-bottom: 1rem;"></i>
-                    <h1>Equipe de Criação</h1>
-                    <p style="color: var(--cinza-claro); margin-bottom: 0.5rem;">Conteúdo e pesquisa sobre a trajetória industrial do Brasil</p>
-                    <div style="width: 70px; height: 3px; background: var(--amarelo); margin: 0.8rem auto 1.8rem auto; border-radius: 4px;"></div>
+        <!-- ===== SEÇÃO 1: ANTES DA INDÚSTRIA ===== -->
+        <section id="secao1" class="section">
+            <div class="section-header">
+                <span class="icon-circle"><i class="fas fa-tree"></i></span>
+                <h2 class="section-title">Antes da indústria</h2>
+            </div>
+            <div class="section-sub">1500 – 1808 · Economia primária e exportadora</div>
 
-                    <div class="credits-grid">
-                        <div class="credit-item">
-                            <i class="fas fa-user-graduate"></i>
-                            <h3>Manoel Eduardo</h3>
-                            <p>Pesquisa & Redação</p>
-                        </div>
-                        <div class="credit-item">
-                            <i class="fas fa-user-tie"></i>
-                            <h3>Alessandra Hilário</h3>
-                            <p>Curadoria & Revisão</p>
-                        </div>
-                        <div class="credit-item">
-                            <i class="fas fa-user-cog"></i>
-                            <h3>Renan</h3>
-                            <p>Análise de Dados</p>
-                        </div>
-                        <div class="credit-item">
-                            <i class="fas fa-user-astronaut"></i>
-                            <h3>Adrian</h3>
-                            <p>Design & Interatividade</p>
-                        </div>
-                    </div>
-                    <p style="margin-top: 2rem; font-size: 0.9rem; color: #6a8aaa;">
-                        <i class="fas fa-arrow-right" style="color: var(--amarelo);"></i> Use as setas ou os botões para explorar os períodos históricos.
-                    </p>
+            <div class="section-content">
+                <div class="section-text">
+                    <p>O Brasil colonial era essencialmente agrário e extrativista. Portugal <strong>proibia a instalação de manufaturas</strong> na colônia para evitar concorrência com o Reino. Tudo o que se produzia era destinado à exportação de matérias-primas.</p>
+                    <ul>
+                        <li><i class="fas fa-corn"></i> <strong>Economia agrícola</strong> – cana-de-açúcar, tabaco e algodão eram os principais produtos.</li>
+                        <li><i class="fas fa-gem"></i> <strong>Extrativismo mineral</strong> – ouro e diamantes, especialmente no século XVIII.</li>
+                        <li><i class="fas fa-times-circle"></i> <strong>Proibição real</strong> – qualquer tentativa de fábrica era sufocada pela Coroa.</li>
+                        <li><i class="fas fa-ship"></i> <strong>Dependência externa</strong> – todos os bens manufaturados vinham de Portugal ou da Inglaterra.</li>
+                    </ul>
+                    <p style="margin-top: 1rem; font-weight: 500; color: var(--accent-steel);">👉 “economia primária e exportadora”</p>
+                </div>
+                <div class="section-image">
+                    <i class="fas fa-ship"></i>
+                    <div class="placeholder-label">Ilustração · Porto Colonial</div>
                 </div>
             </div>
 
-            <!-- PÁGINA 2: GÊNESE (1808-1930) -->
-            <div class="page" id="page-2">
-                <div class="content-card">
-                    <span class="timeline-badge"><i class="far fa-clock"></i> 1808 – 1930</span>
-                    <h1>A Gênese Tardia</h1>
-                    <div class="subtitle">Da colônia proibida às primeiras manufaturas</div>
-                    <p>Até 1808, a Coroa Portuguesa <strong>proibia manufaturas</strong> no Brasil para evitar concorrência com o Reino. A economia era exclusivamente agroexportadora (açúcar, ouro e café).</p>
+            <!-- Cards menores para enriquecer -->
+            <div class="cards-grid">
+                <div class="phase-card"><i class="fas fa-cane"></i><h4>Cana-de-açúcar</h4><p>Principal produto do Nordeste</p></div>
+                <div class="phase-card"><i class="fas fa-gold"></i><h4>Ciclo do ouro</h4><p>Minas Gerais no século XVIII</p></div>
+                <div class="phase-card"><i class="fas fa-ban"></i><h4>Proibição</h4><p>Manufaturas vetadas por Portugal</p></div>
+            </div>
+
+            <!-- Linha do tempo visual -->
+            <div class="timeline-wrapper">
+                <div class="timeline">
+                    <div class="timeline-item"><span class="timeline-dot"></span><span class="timeline-label">1500</span></div>
+                    <div class="timeline-item"><span class="timeline-dot"></span><span class="timeline-label">1600</span></div>
+                    <div class="timeline-item"><span class="timeline-dot"></span><span class="timeline-label">1700</span></div>
+                    <div class="timeline-item"><span class="timeline-dot"></span><span class="timeline-label">1808</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SEÇÃO 2: PRIMEIRAS TENTATIVAS ===== -->
+        <section id="secao2" class="section">
+            <div class="section-header">
+                <span class="icon-circle"><i class="fas fa-cogs"></i></span>
+                <h2 class="section-title">Primeiras tentativas</h2>
+            </div>
+            <div class="section-sub">1808 – 1930 · O despertar industrial</div>
+
+            <div class="section-content">
+                <div class="section-text">
+                    <p>Com a <strong>chegada da família real</strong> em 1808, D. João VI revogou a proibição e abriu os portos. Surgiram as primeiras manufaturas têxteis, de alimentos e de ferro. O <strong>café</strong>, no final do século XIX, financiou pequenas indústrias, mas a industrialização ainda era frágil e concentrada no Sudeste.</p>
                     <ul>
-                        <li><i class="fas fa-crown"></i> <strong>1808</strong> – Com a chegada da Família Real, D. João VI revoga a proibição, permitindo as primeiras fábricas têxteis e de alimentos.</li>
-                        <li><i class="fas fa-scale-balanced"></i> <strong>1844</strong> – A <strong>Lei Alves Branco</strong> eleva tarifas de importação, protegendo a produção nacional incipiente.</li>
-                        <li><i class="fas fa-coffee"></i> <strong>Final do século XIX</strong> – O capital do café impulsiona investimentos em infraestrutura e indústrias leves, mas o Brasil segue essencialmente agrário.</li>
-                        <li><i class="fas fa-chart-line"></i> <strong>Até 1930</strong> – A indústria ainda é frágil, concentrada em poucos centros urbanos e dependente de capitais externos.</li>
+                        <li><i class="fas fa-crown"></i> <strong>1808</strong> – Abertura dos portos e fim do monopólio português.</li>
+                        <li><i class="fas fa-tshirt"></i> <strong>Primeiras fábricas</strong> – tecidos, alimentos, fundições.</li>
+                        <li><i class="fas fa-mug-saucer"></i> <strong>Café</strong> – capital acumulado no Oeste paulista impulsionou investimentos.</li>
+                        <li><i class="fas fa-map-pin"></i> <strong>Regionalização</strong> – indústria ainda incipiente, focada no Sudeste.</li>
                     </ul>
                 </div>
-            </div>
-
-            <!-- PÁGINA 3: ERA DE OURO (1930-1980) -->
-            <div class="page" id="page-3">
-                <div class="content-card">
-                    <span class="timeline-badge"><i class="far fa-clock"></i> 1930 – 1980</span>
-                    <h1>A Grande Virada</h1>
-                    <div class="subtitle">O Estado como protagonista da industrialização pesada</div>
-                    <p>O período mais intenso de crescimento industrial, com forte intervenção estatal e construção de uma base sólida.</p>
-                    <ul>
-                        <li><i class="fas fa-bolt"></i> <strong>Era Vargas</strong> – Criação da <strong>Companhia Siderúrgica Nacional (1942)</strong> e da <strong>Petrobras (1953)</strong>, além da política de Substituição de Importações.</li>
-                        <li><i class="fas fa-car"></i> <strong>Governo JK (1956-1961)</strong> – Plano de Metas ("50 anos em 5") atrai capital estrangeiro e instala a indústria automobilística e de bens duráveis.</li>
-                        <li><i class="fas fa-trophy"></i> <strong>Regime Militar (1964-1985)</strong> – O "Milagre Econômico" (fim dos anos 60) financia grandes obras (Transamazônica, usinas) com endividamento externo.</li>
-                        <li><i class="fas fa-building"></i> <strong>Diversificação</strong> – O parque industrial se expande para outras regiões, consolidando o Brasil como potência emergente.</li>
-                    </ul>
+                <div class="section-image">
+                    <i class="fas fa-train"></i>
+                    <div class="placeholder-label">Ilustração · Ferrovia do Café</div>
                 </div>
             </div>
 
-            <!-- PÁGINA 4: CRISE E ABERTURA (1980-2000) -->
-            <div class="page" id="page-4">
-                <div class="content-card">
-                    <span class="timeline-badge"><i class="far fa-clock"></i> 1980 – 2000</span>
-                    <h1>Crise e Desindustrialização</h1>
-                    <div class="subtitle">A década perdida e o choque neoliberal</div>
-                    <p>A partir dos anos 1980, o cenário muda drasticamente. A indústria perde fôlego e enfrenta uma reestruturação dolorosa.</p>
+            <div class="cards-grid">
+                <div class="phase-card"><i class="fas fa-door-open"></i><h4>1808</h4><p>Chegada da família real</p></div>
+                <div class="phase-card"><i class="fas fa-coffee"></i><h4>Café</h4><p>Motor da economia</p></div>
+                <div class="phase-card"><i class="fas fa-city"></i><h4>Sudeste</h4><p>Polo industrial nascente</p></div>
+            </div>
+        </section>
+
+        <!-- ===== SEÇÃO 3: ARRANQUE INDUSTRIAL ===== -->
+        <section id="secao3" class="section">
+            <div class="section-header">
+                <span class="icon-circle"><i class="fas fa-rocket"></i></span>
+                <h2 class="section-title">Arranque industrial</h2>
+            </div>
+            <div class="section-sub">1930 – 1955 · Estado como motor da industrialização</div>
+
+            <div class="section-content">
+                <div class="section-text">
+                    <p>Com <strong>Getúlio Vargas</strong>, o Brasil adotou a <strong>política de substituição de importações</strong>. O Estado criou estatais como a <strong>Companhia Siderúrgica Nacional (1942)</strong> e a <strong>Petrobras (1953)</strong>, além de investir pesado em infraestrutura. A indústria de base ganhou impulso decisivo.</p>
                     <ul>
-                        <li><i class="fas fa-exclamation-triangle"></i> <strong>Década de 1980</strong> – Crise da dívida externa, estagnação econômica e hiperinflação corroem a capacidade de investimento.</li>
-                        <li><i class="fas fa-handshake"></i> <strong>Anos 1990</strong> – Abertura comercial e privatizações (influência neoliberal) expõem a indústria à concorrência internacional.</li>
-                        <li><i class="fas fa-arrow-down"></i> <strong>Desindustrialização precoce</strong> – A indústria perde participação no PIB e no emprego, afetando o crescimento de longo prazo.</li>
-                        <li><i class="fas fa-dollar-sign"></i> <strong>Valorização cambial</strong> – O câmbio apreciado barateia importados e desestimula a produção local, aprofundando a crise.</li>
+                        <li><i class="fas fa-gavel"></i> <strong>Vargas</strong> – nacionalismo e planejamento estatal.</li>
+                        <li><i class="fas fa-tools"></i> <strong>Substituição de importações</strong> – produção interna de bens antes importados.</li>
+                        <li><i class="fas fa-oil-can"></i> <strong>CSN e Petrobras</strong> – símbolos da autonomia industrial.</li>
+                        <li><i class="fas fa-chart-line"></i> <strong>Indústria de base</strong> – siderurgia, petroquímica, energia.</li>
                     </ul>
+                    <p style="margin-top: 1rem; font-weight: 500; color: var(--accent-steel);">👉 “Estado como motor da industrialização”</p>
+                </div>
+                <div class="section-image">
+                    <i class="fas fa-oil-well"></i>
+                    <div class="placeholder-label">Ilustração · Petrobras</div>
                 </div>
             </div>
 
-            <!-- PÁGINA 5: SÉCULO XXI (2000 - ATUAL) -->
-            <div class="page" id="page-5">
-                <div class="content-card">
-                    <span class="timeline-badge"><i class="far fa-clock"></i> 2000 – Atual</span>
-                    <h1>Reinvenção e Desafios</h1>
-                    <div class="subtitle">Indústria 4.0, inovação e competitividade</div>
-                    <p>O século XXI trouxe novas políticas industriais, mas o parque fabril brasileiro ainda busca se reposicionar no cenário global.</p>
+            <div class="cards-grid">
+                <div class="phase-card"><i class="fas fa-industry"></i><h4>1942</h4><p>CSN – Siderurgia</p></div>
+                <div class="phase-card"><i class="fas fa-bolt"></i><h4>1953</h4><p>Petrobras – Energia</p></div>
+                <div class="phase-card"><i class="fas fa-flag"></i><h4>Vargas</h4><p>Industrialização nacional</p></div>
+            </div>
+        </section>
+
+        <!-- ===== SEÇÃO 4: EXPANSÃO E MODERNIZAÇÃO ===== -->
+        <section id="secao4" class="section">
+            <div class="section-header">
+                <span class="icon-circle"><i class="fas fa-car"></i></span>
+                <h2 class="section-title">Expansão e modernização</h2>
+            </div>
+            <div class="section-sub">1956 – 1980 · JK, multinacionais e automóveis</div>
+
+            <div class="section-content">
+                <div class="section-text">
+                    <p>O governo de <strong>Juscelino Kubitschek (JK)</strong> lançou o <strong>Plano de Metas</strong>, atraindo multinacionais e instalando a indústria automobilística. Houve forte crescimento urbano, construção de rodovias e modernização econômica. O Brasil se tornou uma potência industrial emergente.</p>
                     <ul>
-     
+                        <li><i class="fas fa-car"></i> <strong>Indústria automobilística</strong> – Volkswagen, Ford, GM se instalam.</li>
+                        <li><i class="fas fa-road"></i> <strong>Infraestrutura</strong> – rodovias, usinas hidrelétricas, telecomunicações.</li>
+                        <li><i class="fas fa-globe"></i> <strong>Multinacionais</strong> – entrada de capital e tecnologia estrangeiros.</li>
+                        <li><i class="fas fa-city"></i> <strong>Crescimento urbano</strong> – migração campo-cidade e expansão das metrópoles.</li>
+                    </ul>
+                </div>
+                <div class="section-image">
+                    <i class="fas fa-truck"></i>
+                    <div class="placeholder-label">Ilustração · Fábrica automotiva</div>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="phase-card"><i class="fas fa-car-side"></i><h4>Automóveis</h4><p>JK e o Plano de Metas</p></div>
+                <div class="phase-card"><i class="fas fa-handshake"></i><h4>Multinacionais</h4><p>Capital e tecnologia</p></div>
+                <div class="phase-card"><i class="fas fa-tachometer-alt"></i><h4>Modernização</h4><p>Infraestrutura e urbanização</p></div>
+            </div>
+        </section>
+
+        <!-- ===== SEÇÃO 5: GLOBALIZAÇÃO E MUDANÇAS ===== -->
+        <section id="secao5" class="section">
+            <div class="section-header">
+                <span class="icon-circle"><i class="fas fa-globe-americas"></i></span>
+                <h2 class="section-title">Globalização e mudanças</h2>
+            </div>
+            <div class="section-sub">1980 – hoje · Crises, abertura e serviços</div>
+
+            <div class="section-content">
+                <div class="section-text">
+                    <p>As <strong>crises econômicas</strong> da década de 1980 e a <strong>abertura comercial</strong> dos anos 1990 transformaram a indústria. Privatizações, concorrência internacional e globalização levaram à <strong>desindustrialização parcial</strong>, enquanto o setor de serviços cresceu. A indústria brasileira se reestruturou, mas perdeu peso relativo.</p>
+                    <ul>
+                        <li><i class="fas fa-chart-pie"></i> <strong>Crises</strong> – endividamento, inflação e estagnação.</li>
+                        <li><i class="fas fa-store"></i> <strong>Abertura comercial</strong> – redução de tarifas e maior competição.</li>
+                        <li><i class="fas fa-building"></i> <strong>Privatizações</strong> – venda de estatais e concessões.</li>
+                        <li><i class="fas fa-arrow-down"></i> <strong>Desindustrialização</strong> – perda de participação no PIB.</li>
+                        <li><i class="fas fa-headset"></i> <strong>Serviços</strong> – setor terciário ganha destaque.</li>
+                    </ul>
+                </div>
+                <div class="section-image">
+                    <i class="fas fa-chart-bar"></i>
+                    <div class="placeholder-label">Ilustração · Crise e reestruturação</div>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="phase-card"><i class="fas fa-exclamation-triangle"></i><h4>Crise</h4><p>Década perdida</p></div>
+                <div class="phase-card"><i class="fas fa-hand-holding-usd"></i><h4>Privatizações</h4><p>Anos 1990</p></div>
+                <div class="phase-card"><i class="fas fa-chart-line"></i><h4>Serviços</h4><p>Novo motor da economia</p></div>
+            </div>
+        </section>
+
+        <!-- ===== SEÇÃO 6: FUTURO (PREVISÕES) ===== -->
+        <section id="secao6" class="section">
+            <div class="section-header">
+                <span class="icon-circle"><i class="fas fa-robot"></i></span>
+                <h2 class="section-title">Futuro</h2>
+            </div>
+            <div class="section-sub">2027 – 2050 · Projeções e cenários possíveis</div>
+
+            <div class="alert-future">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span><strong>⚠️ As informações abaixo são apenas projeções e cenários possíveis, não garantias.</strong> Essas previsões dependem de fatores econômicos, políticos e tecnológicos globais.</span>
+            </div>
+
+            <div class="section-content">
+                <div class="section-text">
+                    <p>O futuro da indústria brasileira passa por <strong>automação, inteligência artificial e energia limpa</strong>. Tendências apontam para fábricas inteligentes (Indústria 4.0 e 5.0), robótica e uma possível <strong>reindustrialização verde</strong>, com foco em hidrogênio, solar e eólica. O Brasil pode se tornar uma potência em agroindústria tecnológica.</p>
+                    <ul>
+                        <li><i class="fas fa-microchip"></i> <strong>Automação com IA</strong> – processos produtivos cada vez mais inteligentes.</li>
+                        <li><i class="fas fa-wifi"></i> <strong>Fábricas inteligentes</strong> – Indústria 4.0 e 5.0 com IoT e conectividade.</li>
+                        <li><i class="fas fa-solar-panel"></i> <strong>Energia limpa</strong> – hidrogênio verde, solar, eólica.</li>
+                        <li><i class="fas fa-leaf"></i> <strong>Reindustrialização verde</strong> – indústria sustentável e de baixo carbono.</li>
+                        <li><i class="fas fa-robot"></i> <strong>Robótica</strong> – substituição de parte da mão de obra repetitiva.</li>
+                        <li><i class="fas fa-tractor"></i> <strong>Agroindústria tecnológica</strong> – Brasil como líder em agritech.</li>
+                    </ul>
+                </div>
+                <div class="section-image">
+                    <i class="fas fa-future"></i>
+                    <div class="placeholder-label">Ilustração · Fábrica do futuro</div>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="phase-card"><i class="fas fa-robot"></i><h4>IA e robótica</h4><p>Produtividade 4.0</p></div>
+                <div class="phase-card"><i class="fas fa-wind"></i><h4>Energia limpa</h4><p>Hidrogênio e renováveis</p></div>
+                <div class="phase-card"><i class="fas fa-seedling"></i><h4>Reindustrialização verde</h4><p>Sustentabilidade</p></div>
+            </div>
+        </section>
+
+    </div> <!-- fim container -->
+
+    <!-- ========== BOTÃO VOLTAR AO TOPO ========== -->
+    <button id="btnTopo" class="btn-topo" aria-label="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ---------- SCROLL REVEAL (animações ao rolar) ----------
+            const sections = document.querySelectorAll('.section');
+
+            function revealSections() {
+                const windowHeight = window.innerHeight;
+                const revealThreshold = 0.15;
+
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const revealPoint = rect.top + rect.height * revealThreshold;
+                    if (revealPoint < windowHeight) {
+                        section.classList.add('revealed');
+                    }
+                });
+            }
+
+            // Aciona no carregamento e no scroll
+            window.addEventListener('load', revealSections);
+            window.addEventListener('scroll', revealSections);
+
+            // ---------- SCROLL SPY (destaque no menu) ----------
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            function updateActiveLink() {
+                let currentSectionId = '';
+                const scrollPos = window.scrollY + 120; // offset para compensar a nav fixa
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                        currentSectionId = section.getAttribute('id');
+                    }
+                });
+
+                // Se estiver no topo, marca a primeira
+                if (scrollPos < 100) {
+                    currentSectionId = 'secao1';
+                }
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + currentSectionId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveLink);
+            window.addEventListener('load', updateActiveLink);
+
+            // ---------- BOTÃO VOLTAR AO TOPO ----------
+            const btnTopo = document.getElementById('btnTopo');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 500) {
+                    btnTopo.classList.add('visible');
+                } else {
+                    btnTopo.classList.remove('visible');
+                }
+            });
+
+            btnTopo.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // ---------- NAVEGAÇÃO SUAVE (opcional, mas já temos scroll-behavior) ----------
+            // Os links já usam #id e o scroll-behavior: smooth no HTML
+
+            // ---------- PEQUENO AJUSTE: re-reveal caso conteúdo mude ----------
+            // Nada mais necessário.
+
+        })();
+    </script>
+
+</body>
+</html>
